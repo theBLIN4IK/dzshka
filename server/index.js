@@ -33,9 +33,10 @@ app.get('/users', async (req, res) => {
   }
 })
 
+const { ObjectId } = require('mongodb')
 app.get('/users2', async (req, res) => { 
     try {
-      const users = await UserModel.findOne({name: "Ned Stark"})
+      const users = await UserModel.findOne({_id: new ObjectId('59b99db6cfa9a34dcd7885bb')})
       res.send(users)
     } catch (err) {
       console.error(err, 'ошибка при получении пользователей')
@@ -47,9 +48,8 @@ app.get('/users2', async (req, res) => {
 
   app.get('/theaters', async (req, res) => {
     try {
-      const sortedTheaters = await TheaterModel.find({ theaterId: { $gte: 1000, $lte: 1010 } })
+      const sortedTheaters = await TheaterModel.find({ theaterId: { $gte: 1000, $lte: 1010 } }).sort({ theaterId: -1 })
       console.log(sortedTheaters)
-      console.log("ну лан хай так")
       res.send(sortedTheaters)
     } catch (error) {
       console.error(error)
